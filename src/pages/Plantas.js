@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, FlatList } from 'react-native';
+import { SafeAreaView, TextInput, FlatList, Text } from 'react-native';
 import { globalStyles } from '../styles/global';
 import { PlantasCard } from '../components/PlantasCard';
-import { axios } from 'axios';
+import { plantStyles } from '../styles/plantStyles';
+import axios from 'axios';
 
-const Plantas  = () => {
+const Plantas = () => {
     // dados originais
     const [ data, setData ] = useState([]);
 
@@ -15,23 +16,20 @@ const Plantas  = () => {
     const [ searchQuery, setSearchQuery ] = useState('');
 
     useEffect(() => {
-        try {
-            async function fetchData() {
-                const response = await axios.get('http://192.168.0.212/plantas ');
-                setData(response.plantas)
+        async function getPlants() {
+            const response = await axios.get('http://192.168.0.212:3000/plantas');
+            setData(response.data); 
+    
+            console.log(data);
+            console.log(response);
 
-                console.log(" response plantas" + response.plantas);
-            }
-
-            fetchData();
-
-        } catch (error) {
-            console.log(error);
         }
+    
+        getPlants();
 
     }, []);
 
-    useEffect(() => {
+    /* useEffect(() => {
 
         function filterData() {
             if (searchQuery !== '') {
@@ -52,27 +50,30 @@ const Plantas  = () => {
 
         filterData();
 
-    },[searchQuery]);
+    },[searchQuery]); */
 
     return (
         <SafeAreaView style={globalStyles.container}>
             <TextInput
-
+            style={ plantStyles.input}
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="Pesquisar..."
             />
 
-            <FlatList 
-                data={filteredData}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <PlantasCard data={item}/>
-                )}
-            />
+            {
+                data.length === 0 ? 
+                <Text>Carregando...</Text> :
+                <FlatList 
+                    data={data}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) =>
+                        <PlantasCard data={item} />
+                    }
+                />
+            }
         </SafeAreaView>
     );
 };
-
 
 export default Plantas;

@@ -1,9 +1,11 @@
 import { View, Text } from 'react-native';
 
-const PlantasCard = ({ data }) => {
+const PlantasCard = ({ name }) => {
     return (
         <View>
-            <Text>{data.name}</Text>
+            <Text style={{ color: "#000"}}>{name}</Text>
         </View>
     )
 }
+
+export default PlantasCard;
