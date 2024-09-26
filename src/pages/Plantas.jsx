@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, FlatList, Text, View, Image } from 'react-native';
-import { globalStyles } from '../styles/global';
-import { PlantasCard } from '../components/PlantasCard';
-import { plantStyles } from '../styles/plantStyles';
+import { SafeAreaView, TextInput, FlatList, Text, View, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import { globalStyles } from '../styles/global';
+import { plantStyles } from '../styles/plantStyles';
+import { loadingStyles } from '../styles/loadingStyles';
 
 const Plantas = () => {
     // dados originais
@@ -20,6 +20,7 @@ const Plantas = () => {
             axios.get('http://192.168.0.212:3000/plantas')
             .then(response => {
                 setData(response.data);
+                setFilteredData(response.data);
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
@@ -30,12 +31,12 @@ const Plantas = () => {
 
     }, []);
 
-    /* useEffect(() => {
+    useEffect(() => {
 
         function filterData() {
             if (searchQuery !== '') {
                 const filteredDatas = data.filter((item) => {
-                    return item.name.includes(searchQuery);
+                    return item.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
                 });
 
                 setFilteredData(filteredDatas);
@@ -51,7 +52,7 @@ const Plantas = () => {
 
         filterData();
 
-    },[searchQuery]); */
+    },[searchQuery]);
 
     return (
         <SafeAreaView style={globalStyles.container}>
@@ -63,10 +64,14 @@ const Plantas = () => {
             />
 
             {
-                data.length === 0 ? 
-                <Text>Carregando...</Text> :
+                data?.length === 0 ? 
+                <View sytle={ loadingStyles.container }>
+                    <ActivityIndicator size={40} color="#000"/>
+                    <Text>Carregando...</Text>
+                </View> 
+                :
                 <FlatList 
-                    data={data}
+                    data={filteredData}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <View style={ plantStyles.container }>

@@ -7,6 +7,9 @@ export const plantStyles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 10,
+        backgroundColor: '#fff',
+        borderColor: "gray",
+        fontSize: 16,
     },
     container: {
         padding: 16,
