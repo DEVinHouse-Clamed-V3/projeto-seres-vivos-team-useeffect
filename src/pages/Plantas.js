@@ -19,7 +19,6 @@ const Plantas = () => {
         function getPlants() {
             axios.get('http://192.168.0.212:3000/plantas')
             .then(response => {
-                console.log(response.data);
                 setData(response.data);
             })
             .catch(error => {
@@ -78,7 +77,30 @@ const Plantas = () => {
                                 />
                             </View>
                             
-                            <Text>{item.name}</Text>
+                            <Text style={ plantStyles.title }>
+                                {item.name}
+                            </Text>
+                            <Text>
+                                {item.description}
+                            </Text>
+                            <Text>
+                                <Text style={ plantStyles.textBold }>
+                                    Nutrição: 
+                                </Text>
+                                {item.nutrition}
+                            </Text>
+                            <Text>
+                                Tipo de celula: {item.cellType}
+                            </Text>
+                            <Text>
+                                Organização celular: {item.cellOrganization}
+                            </Text>
+                            <Text>
+                                Reprodução: {item.reproduction}
+                            </Text>
+                            <Text>
+                                Respiração: {item.respiration}
+                            </Text>
                         </View>
                       )}
                 />

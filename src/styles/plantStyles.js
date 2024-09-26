@@ -26,5 +26,14 @@ export const plantStyles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 10,
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    textBold: {
+        fontWeight: 'bold',
+        marginRight: 24,
     }
 });
