@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 
-const PlantasCard = ({ data }) => {
+const PlantasCard = ({ plant}) => {
     return (
         <View>
-            <Text>{data.name}</Text>
+            <Text>{plant.name}</Text>
         </View>
     )
 }

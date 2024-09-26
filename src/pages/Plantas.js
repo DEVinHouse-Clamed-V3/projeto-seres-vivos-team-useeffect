@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, FlatList, Text, View } from 'react-native';
+import { SafeAreaView, TextInput, FlatList, Text, View, Image } from 'react-native';
 import { globalStyles } from '../styles/global';
 import { PlantasCard } from '../components/PlantasCard';
 import { plantStyles } from '../styles/plantStyles';
@@ -70,8 +70,15 @@ const Plantas = () => {
                     data={data}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View>
-                          <Text>{item.name}</Text>
+                        <View style={ plantStyles.container }>
+                            <View style={ plantStyles.areaImage }>
+                                <Image 
+                                    style={ plantStyles.image }
+                                    source={{ uri:item.image }}
+                                />
+                            </View>
+                            
+                            <Text>{item.name}</Text>
                         </View>
                       )}
                 />
