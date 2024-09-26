@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, FlatList, Text } from 'react-native';
+import { SafeAreaView, TextInput, FlatList, Text, View } from 'react-native';
 import { globalStyles } from '../styles/global';
 import { PlantasCard } from '../components/PlantasCard';
 import { plantStyles } from '../styles/plantStyles';
@@ -16,13 +16,15 @@ const Plantas = () => {
     const [ searchQuery, setSearchQuery ] = useState('');
 
     useEffect(() => {
-        async function getPlants() {
-            const response = await axios.get('http://192.168.0.212:3000/plantas');
-            setData(response.data); 
-    
-            console.log(data);
-            console.log(response);
-
+        function getPlants() {
+            axios.get('http://192.168.0.212:3000/plantas')
+            .then(response => {
+                console.log(response.data);
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
         }
     
         getPlants();
@@ -66,10 +68,12 @@ const Plantas = () => {
                 <Text>Carregando...</Text> :
                 <FlatList 
                     data={data}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) =>
-                        <PlantasCard data={item} />
-                    }
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <View>
+                          <Text>{item.name}</Text>
+                        </View>
+                      )}
                 />
             }
         </SafeAreaView>
