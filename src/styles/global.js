@@ -8,7 +8,7 @@ export const globalStyles = StyleSheet.create({
     },
     containerFungo: {
       flex: 1,
-      backgroundColor: '#FFA500',
+      backgroundColor: '#f0f0f0',
       paddingVertical: 20,
     },
     cartao: {
