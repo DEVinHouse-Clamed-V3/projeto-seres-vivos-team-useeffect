@@ -6,6 +6,11 @@ export const globalStyles = StyleSheet.create({
       backgroundColor: '#f0f0f0',
       paddingVertical: 20,
     },
+    containerFungo: {
+      flex: 1,
+      backgroundColor: '#FFA500',
+      paddingVertical: 20,
+    },
     cartao: {
       backgroundColor: '#fff',
       padding: 15,
@@ -36,5 +41,13 @@ export const globalStyles = StyleSheet.create({
     detalheCartao: {
       fontSize: 12,
       color: '#666',
+    },
+    pesquisa: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      paddingLeft: 8,
+      margin: 10,
+      borderRadius: 8,
     }
   });

@@ -159,6 +159,17 @@
     }
   ],
   "fungos": [
+    {
+      "id": "1",
+      "name": "Champignon",
+      "description": "Um tipo comum de cogumelo comestível.",
+      "nutrition": "Heterotrófico",
+      "cellType": "Eucariontes",
+      "cellOrganization": "Multicelulares",
+      "reproduction": "Assexuada e Sexuada",
+      "respiration": "Aeróbia",
+      "image": "https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia11351/didierbier-champignon-cursos-cpt.jpg"
+    },
     
     {
       "id": "2",
@@ -169,7 +180,7 @@
       "cellOrganization": "Multicelulares",
       "reproduction": "Assexuada e Sexuada",
       "respiration": "Aeróbia",
-      "image": "https://via.placeholder.com/150"
+      "image": "https://cdn.britannica.com/90/236590-050-27422B8D/Close-up-of-mushroom-growing-on-field.jpg"
     },
     {
       "id": "3",
@@ -215,17 +226,7 @@
       "respiration": "Aeróbia",
       "image": "https://via.placeholder.com/150"
     },
-    {
-      "id": "1",
-      "name": "Champignon",
-      "description": "Um tipo comum de cogumelo comestível.",
-      "nutrition": "Heterotrófico",
-      "cellType": "Eucariontes",
-      "cellOrganization": "Multicelulares",
-      "reproduction": "Assexuada e Sexuada",
-      "respiration": "Aeróbia",
-      "image": "https://via.placeholder.com/150"
-    },
+   
     {
       "id": "7",
       "name": "Cogumelo Shiitake",
