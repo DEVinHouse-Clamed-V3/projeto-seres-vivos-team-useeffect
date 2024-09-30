@@ -137,12 +137,12 @@ const Plantas = () => {
     },[searchQuery]);
 
     return (
-        <SafeAreaView style={globalStyles.container}>
+        <SafeAreaView style={ globalStyles.container }>
             <TextInput
-            style={ plantStyles.input}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholder="Pesquisar..."
+                style={ plantStyles.input}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholder="Pesquisar..."
             />
 
             {
