@@ -5,6 +5,82 @@ import { globalStyles } from '../styles/global';
 import { plantStyles } from '../styles/plantStyles';
 import { loadingStyles } from '../styles/loadingStyles';
 
+function Loading() {
+    return (
+        <View style={loadingStyles.container}>
+            <ActivityIndicator size={40} color="#000"/>
+            <Text>Carregando...</Text>
+        </View>
+    );
+}
+
+function PlantasList({ item }) {
+    return (
+        <View style={ plantStyles.container }>
+            <View style={ plantStyles.titleView }>
+                <Text style={ plantStyles.title }>
+                    {item.name}
+                </Text>
+                <Text>
+                    {item.description}
+                </Text>
+            </View>
+
+            <View style={ plantStyles.areaImage }>
+                <Image 
+                    style={ plantStyles.image }
+                    source={{ uri:item.image }}
+                />
+            </View>
+            
+            <Text style={ plantStyles.textDetails }>
+                <Text style={ plantStyles.textBold }>
+                    Nutrição: 
+                </Text>
+                <Text>
+                    {item.nutrition}
+                </Text>
+            </Text>
+
+            <Text>
+                <Text style={ plantStyles.textBold }>
+                    Tipo de celula:
+                </Text>
+                <Text>
+                    {item.cellType}
+                </Text>
+            </Text>
+
+            <Text>
+                <Text style={ plantStyles.textBold }>
+                    Organização celular:
+                </Text>
+                <Text>
+                    {item.cellOrganization}
+                </Text>
+            </Text>
+
+            <Text>
+                <Text style={ plantStyles.textBold }>
+                    Reprodução:
+                </Text>
+                <Text>
+                    {item.reproduction}
+                </Text>
+            </Text>
+
+            <Text>
+                <Text style={ plantStyles.textBold }>
+                    Respiração:
+                </Text>
+                <Text>
+                    {item.respiration}
+                </Text>
+            </Text>
+        </View>
+    );
+}
+
 const Plantas = () => {
     // dados originais
     const [ data, setData ] = useState([]);
@@ -15,18 +91,26 @@ const Plantas = () => {
     // query de pesquisa
     const [ searchQuery, setSearchQuery ] = useState('');
 
+    const [ loading, setLoading ] = useState(true);
+
     useEffect(() => {
+
         function getPlants() {
             axios.get('http://192.168.0.212:3000/plantas')
             .then(response => {
                 setData(response.data);
                 setFilteredData(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
+                setLoading(false);
+            }).
+            finally(() => {
+                setLoading(false);
             });
         }
-    
+
         getPlants();
 
     }, []);
@@ -46,8 +130,6 @@ const Plantas = () => {
                 setFilteredData(data);
 
             }
-
-            console.log("Filtrados :" + filteredData);
         }
 
         filterData();
@@ -65,49 +147,17 @@ const Plantas = () => {
 
             {
                 data?.length === 0 ? 
-                <View sytle={ loadingStyles.container }>
-                    <ActivityIndicator size={40} color="#000"/>
-                    <Text>Carregando...</Text>
-                </View> 
+                <Loading />
                 :
                 <FlatList 
                     data={filteredData}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View style={ plantStyles.container }>
-                            <View style={ plantStyles.areaImage }>
-                                <Image 
-                                    style={ plantStyles.image }
-                                    source={{ uri:item.image }}
-                                />
-                            </View>
-                            
-                            <Text style={ plantStyles.title }>
-                                {item.name}
-                            </Text>
-                            <Text>
-                                {item.description}
-                            </Text>
-                            <Text>
-                                <Text style={ plantStyles.textBold }>
-                                    Nutrição: 
-                                </Text>
-                                {item.nutrition}
-                            </Text>
-                            <Text>
-                                Tipo de celula: {item.cellType}
-                            </Text>
-                            <Text>
-                                Organização celular: {item.cellOrganization}
-                            </Text>
-                            <Text>
-                                Reprodução: {item.reproduction}
-                            </Text>
-                            <Text>
-                                Respiração: {item.respiration}
-                            </Text>
-                        </View>
-                      )}
+                        <PlantasList item={item} />
+                    )}
+                    /* refreshing={loading}
+                    onRefresh={getPlants} */
+                    ListFooterComponent={<View style={{height: 50}}></View>}
                 />
             }
         </SafeAreaView>

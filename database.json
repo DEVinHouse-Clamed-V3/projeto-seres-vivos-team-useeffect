@@ -10,7 +10,7 @@
           "cellOrganization": "Multicelulares",
           "reproduction": "Sexuada",
           "respiration": "Aeróbia",
-          "image": "https://via.placeholder.com/150"
+          "image": "require('../../assets/cacto.jpg')"
         },
         {
           "id": "2",

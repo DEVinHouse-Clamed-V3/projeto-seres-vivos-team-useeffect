@@ -26,17 +26,26 @@ export const plantStyles = StyleSheet.create({
         paddingVertical: 8,
     },
     image: {
-        width: 100,
+        width: "100%",
         height: 100,
         borderRadius: 10,
+    },
+    titleView: {
+        marginBottom: 18,
     },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 8,
     },
+    textDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 8,
+    },
     textBold: {
         fontWeight: 'bold',
         marginRight: 24,
-    }
+    },
 });
