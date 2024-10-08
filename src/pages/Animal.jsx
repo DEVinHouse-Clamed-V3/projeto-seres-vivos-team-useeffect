@@ -1,7 +1,88 @@
-import React, { useState } from 'react';
-import { Text, SafeAreaView, View, TextInput, StyleSheet, FlatList } from 'react-native';
+import React, {useEffect, useState } from 'react';
+import { Text, SafeAreaView, View, TextInput, StyleSheet, FlatList, Image } from 'react-native';
 import { globalStyles } from '../styles/global';
-import AnimalList from ".../components/AnimalList";
+import axios from 'axios';
+
+function AnimalList({ item }) {
+  return (
+    <View style={styles.containerAnimal}>
+      <View>
+        <Text style={[styles.title,
+        {
+          marginBottom: 8,
+          color: "#333",
+          fontSize: 20,
+          fontWeight: "bold",
+          textAling: "left",
+
+        }]}>
+          {item.name}
+        </Text>
+        <Text>
+          {item.description}
+        </Text>
+      </View>
+
+      <View>
+        <Image
+          style={styles.image}
+          source={{ uri: item.image }}
+        />
+      </View>
+
+      <View style={styles.details}>
+        <Text styles={styles.titleDetails}>
+          Nutrição:
+        </Text>
+        <Text style={styles.description}>{
+          item.nutrition}
+        </Text>
+      </View>
+
+
+      <View style={styles.details}>
+        <Text styles={styles.titleDetails}>
+          Tipo Celular:
+        </Text>
+        <Text style={styles.description}>{
+          item.cellType
+        }
+        </Text>
+      </View>
+
+
+      <View style={styles.details}>
+        <Text styles={styles.titleDetails}>
+          Organização celular:
+        </Text>
+        <Text style={styles.description}>{
+          item.cellOrganization}
+        </Text>
+      </View>
+
+
+      <View style={styles.details}>
+        <Text styles={styles.titleDetails}>
+          Reprodução:
+        </Text>
+        <Text style={styles.description}>{
+          item.reproduction}
+        </Text>
+      </View>
+
+
+      <View style={styles.details}>
+        <Text styles={styles.titleDetails}>
+          Respiração:
+        </Text>
+        <Text style={styles.description}>{
+          item.respiration}
+        </Text>
+      </View>
+
+    </View>
+  )
+}
 
 const Animal = () => {
 
@@ -20,6 +101,18 @@ const Animal = () => {
     }
   ]);
 
+
+  useEffect(()=>{
+    axios.get("")
+    .then(response=>{
+      setanimals(response.data);
+    })
+    .catch(error=>{
+      console.error(error);
+      Alert.alert("Error ao buscar animais");
+    });
+  },[]);
+  
   return (
     <SafeAreaView style={[globalStyles.container, { marginHorzontal: 16 }]}>
       <View>
@@ -28,7 +121,7 @@ const Animal = () => {
         </Text>
 
         <View>
-          <Text style={styles.label}>Filtar</Text>
+          <Text style={styles.label}>Filtrar</Text>
           <TextInput
             value={search}
             onChangeText={setSearch}
@@ -45,17 +138,17 @@ const Animal = () => {
         data={animals}
         keyExtractor={item => item.id}
         renderItem={
-          ({item}) => (
-              <AnimalList item={item}/>
-        )
-      }
-      listEmptyComponent={
-        <text>
-          Nenhum animal encontrado
-        </text>
-      }
-        />
-        </SafeAreaView>
+          ({ item }) => (
+            <AnimalList item={item} />
+          )
+        }
+        listEmptyComponent={
+          <text>
+            Nenhum animal encontrado
+          </text>
+        }
+      />
+    </SafeAreaView>
   );
 };
 
@@ -80,6 +173,33 @@ const styles = StyleSheet.create({
     backgroundcolor: "#fff",
     color: "#333",
   },
+  containerAnimal: {
+    paddingVertical: 40,
+    backgroundColor: "#fff",
+    borderRadios: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#gray",
+    elevation: 2,
+    padding:16,
+  },
+  image: {
+    width: "100%",
+    height: 150,
+  },
+  details: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  titleDetails: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  description: {
+    fontSize: 16,
+    color: "#666",
+  }
 })
 
 
