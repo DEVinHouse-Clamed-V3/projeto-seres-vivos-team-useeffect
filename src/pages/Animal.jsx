@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, SafeAreaView, View, TextInput, StyleSheet, FlatList, Image } from 'react-native';
 import { globalStyles } from '../styles/global';
 import axios from 'axios';
@@ -87,32 +87,34 @@ function AnimalList({ item }) {
 const Animal = () => {
 
   const [search, setSearch] = useState('');
-  const [animals, setanimals] = useState([
-    {
-      "id": "1",
-      "name": "Leão",
-      "description": "O leão é um grande felino da família dos felídeos.",
-      "nutrition": "Heterotrófico",
-      "cellType": "Eucariontes",
-      "cellOrganization": "Multicelulares",
-      "reproduction": "Sexuada",
-      "respiration": "Aeróbia",
-      "image": "https://via.placeholder.com/150"
-    }
-  ]);
+  const [animals, setanimals] = useState([]);
+  const[filteredAnimals, setFilterdAnimals]= useState([]);
 
+
+  useEffect(() => {
+    axios.get("http://192.168.0.2:3000/animais")
+      .then(response => {
+        setanimals(response.data);
+        setFilteredAnimals(respose.data)
+      })
+      .catch(error => {
+        console.error(error);
+        Alert.alert("Error ao buscar animais");
+      });
+  }, []);
 
   useEffect(()=>{
-    axios.get("")
-    .then(response=>{
-      setanimals(response.data);
-    })
-    .catch(error=>{
-      console.error(error);
-      Alert.alert("Error ao buscar animais");
-    });
-  },[]);
-  
+  if (search === "") {
+    setFilterdAnimals(animals);
+  } else {
+    const filtered = animals.filter(animal=>{
+      return
+      animal.name.toLowerCase().includes(search.toLowerCase());
+
+      setFilterdAnimals(filtered);
+    }
+  )}},[search]);
+
   return (
     <SafeAreaView style={[globalStyles.container, { marginHorzontal: 16 }]}>
       <View>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#gray",
     elevation: 2,
-    padding:16,
+    padding: 16,
   },
   image: {
     width: "100%",
